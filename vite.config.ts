@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'path'
 import { type UserConfig, defineConfig } from 'vite'
@@ -13,6 +14,7 @@ export default defineConfig({
   envDir: './env/',
   plugins: [
     react(),
+    tailwindcss(),
     qrcode(),
     compression({
       exclude: [/\.(br)$/, /\.(gz)$/],

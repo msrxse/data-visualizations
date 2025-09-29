@@ -23,11 +23,21 @@
     "**/dist": true,
     "**/.next": true
   },
+  "workbench.colorTheme": "Noctis Obscuro",
+  // Terminal
+  "terminal.integrated.showExitAlert": false,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.tabs.enabled": false,
+  "workbench.statusBar.visible": false,
+
   // Standard settings
   "javascript.validate.enable": false,
   "html.format.indentHandlebars": true,
   "html.format.indentInnerHtml": true,
   "html.format.templating": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   // prettier settings
   "prettier.requireConfig": true,
   "prettier.prettierPath": "./node_modules/prettier",
