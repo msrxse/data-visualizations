@@ -1,7 +1,9 @@
+import { BarChart } from '@/modules/BarChart/BarChart'
+
 const App = () => {
   return (
-    <div className="flex flex-col justify-center items-center border min-h-screen">
-      <h1 className="text-2xl ">Hello World</h1>
+    <div className="font-inter flex flex-col min-h-screen md:max-w-3xl mx-auto">
+      <BarChart />
     </div>
   )
 }
