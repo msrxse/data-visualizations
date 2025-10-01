@@ -46,9 +46,16 @@
     "bun": "^1.2.x"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.2.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "d3": "^7.9.0",
+    "d3-geo": "^3.1.1",
+    "lucide-react": "^0.544.0",
     "react": "^19.x",
-    "react-dom": "^19.x"
+    "react-dom": "^19.x",
+    "tailwind-merge": "^3.3.1",
+    "topojson": "^3.0.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.x",
@@ -62,8 +69,10 @@
     "@testing-library/user-event": "^14.x",
     "@types/bun": "^1.x",
     "@types/d3": "^7.4.3",
+    "@types/d3-geo": "^3.1.0",
     "@types/react": "^19.x",
     "@types/react-dom": "^19.x",
+    "@types/topojson": "^3.2.6",
     "@vitejs/plugin-react-swc": "^3.x",
     "@vitest/coverage-v8": "^3.x",
     "@vitest/ui": "^3.x",
@@ -78,6 +87,7 @@
     "stylelint": "^16.x",
     "stylelint-config-standard": "^39.x",
     "tailwindcss": "^4.1.13",
+    "tw-animate-css": "^1.4.0",
     "typescript": "^5.x",
     "vite": "^7.x",
     "vite-bundle-visualizer": "^1.x",
