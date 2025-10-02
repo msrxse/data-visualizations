@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { extent, format, scaleLinear } from 'd3'
+import { extent, format, scaleLinear, scaleOrdinal } from 'd3'
 
 import {
   Select,
@@ -12,7 +12,7 @@ import {
 import { AxisBottom } from '@/modules/ScatterPlot/AxisBottom'
 import { AxisLeft } from '@/modules/ScatterPlot/AxisLeft'
 import { Marks } from '@/modules/ScatterPlot/Marks'
-import { type Data } from '@/modules/ScatterPlot/types'
+import { type CScale, type Data } from '@/modules/ScatterPlot/types'
 import { useData } from '@/modules/ScatterPlot/useData'
 
 import './styles.css'
@@ -43,6 +43,7 @@ export function ScatterPlot() {
   const xValue = (d: Data) => d[xSelected]
   const yValue = (d: Data) => d[ySelected]
   const getLabel = (key: keyof typeof selectItems) => selectItems[key]
+  const colorValue = (d: Data) => d.species
 
   if (!data) {
     return <div>Loading...</div>
@@ -56,6 +57,9 @@ export function ScatterPlot() {
   const yScale = scaleLinear()
     .domain(extent(data, yValue) as [number, number])
     .range([0, innerHeight])
+  const colorScale = scaleOrdinal()
+    .domain(data.map(colorValue)) // the extend of unique values
+    .range(['#e6842a', '#137b80', '#8e6c8a'])
 
   return (
     <div className={`w-[${width}px] h-[${height}px]`}>
@@ -116,8 +120,10 @@ export function ScatterPlot() {
             data={data}
             xScale={xScale}
             yScale={yScale}
+            colorScale={colorScale as CScale}
             xValue={xValue}
             yValue={yValue}
+            colorValue={colorValue}
             tooltipFormat={xAxisTickFormat}
             circleRadius={7}
           />

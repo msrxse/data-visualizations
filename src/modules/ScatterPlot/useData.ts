@@ -16,6 +16,7 @@ export const useData = () => {
       sepal_width: +d.sepal_width!,
       petal_length: +d.petal_length!,
       petal_width: +d.petal_width!,
+      species: d.species!,
     })
     csv<Data>(csvUrl, row).then(setData)
   }, [])
