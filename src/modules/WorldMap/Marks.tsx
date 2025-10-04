@@ -1,13 +1,13 @@
 import { geoGraticule, geoNaturalEarth1, geoPath } from 'd3-geo'
 
-import { type Data } from '@/modules/WorldMap/types'
+import { type City, type SizeScale, type WorldAtlas } from '@/modules/WorldMap/types'
 
 /**
  *
  * Two things:
  * 1. How to get from GeoJSON to SGV paths?
  *    How to get from longitude/latitude to pixel coordinates
- * 2. then how do you generate the line string you we pass into these SVG paths
+ * 2. then how do you generate the line string you then pass into these SVG paths
  *
  * d3/d3-geo has utilities to help you with these 2 things above
  *
@@ -19,11 +19,17 @@ import { type Data } from '@/modules/WorldMap/types'
 export const Marks = ({
   width,
   height,
-  data: { land, interiors },
+  worldAtlas: { land, interiors },
+  cities,
+  sizeScale,
+  sizeValue,
 }: {
   width: number
   height: number
-  data: Data
+  worldAtlas: WorldAtlas
+  cities: City[]
+  sizeScale: SizeScale
+  sizeValue: (city: City) => number
 }) => {
   const projection = geoNaturalEarth1().fitSize([width, height], { type: 'Sphere' })
   const path = geoPath(projection)
@@ -37,6 +43,24 @@ export const Marks = ({
         return <path className="land" key={`${i}`} d={path(feature) ?? undefined} />
       })}
       <path className="interiors" d={path(interiors) ?? undefined} />
+      {cities.map((d) => {
+        /**
+         * We assign a radius based on the population of each city
+         * sizeScale(sizeValue(d))
+         */
+        const point = projection([d.lng, d.lat])
+        if (!point) return null
+        const [x, y] = point
+
+        return (
+          <circle
+            key={`${d.city}-${d.country}-${d.lat}`}
+            cx={x}
+            cy={y}
+            r={sizeScale(sizeValue(d))}
+          />
+        )
+      })}
     </g>
   )
 }

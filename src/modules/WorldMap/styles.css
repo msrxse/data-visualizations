@@ -1,21 +1,26 @@
 .marks .land {
-  fill: #137b80;
+  fill: #ececec;
   stroke: none;
 }
 
 .marks .sphere {
-  fill: #ececec;
+  fill: #fbfbfb;
   stroke: none;
 }
 
 .marks .interiors {
   fill: none;
-  stroke: #339498;
+  stroke: #d9dfe0;
   stroke-width: 1px;
 }
 
 .marks .graticule {
   fill: none;
-  stroke: #dadada;
+  stroke: #ececec;
   stroke-width: 1px;
+}
+
+circle {
+  fill: #137b80;
+  opacity: 0.3;
 }

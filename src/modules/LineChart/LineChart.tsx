@@ -8,7 +8,7 @@ import { useData } from '@/modules/LineChart/useData'
 
 import './styles.css'
 
-const width = 600
+const width = 1024
 const height = 500
 const margin = { top: 20, right: 40, bottom: 65, left: 90 }
 const innerHeight = height - margin.top - margin.bottom

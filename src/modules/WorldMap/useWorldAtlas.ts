@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { json } from 'd3'
 import { feature, mesh } from 'topojson'
 
-import { type Data, type WorldTopoJSON } from './types'
+import { type WorldAtlas, type WorldTopoJSON } from './types'
 
 const jsonUrl = 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json'
 
@@ -18,8 +18,8 @@ const jsonUrl = 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json'
  * coordinate pairs and we can m,ap directly to SVG paths.
  *
  * */
-export const useData = () => {
-  const [data, setData] = useState<Data | null>(null)
+export const useWorldAtlas = () => {
+  const [data, setData] = useState<WorldAtlas | null>(null)
 
   useEffect(() => {
     json<WorldTopoJSON>(jsonUrl).then((topology) => {
@@ -27,9 +27,9 @@ export const useData = () => {
         const { countries, land } = topology.objects
 
         setData({
-          land: feature(topology, land) as Data['land'],
-          countries: feature(topology, countries) as Data['countries'],
-          interiors: mesh(topology, countries, (a, b) => a !== b) as Data['interiors'],
+          land: feature(topology, land) as WorldAtlas['land'],
+          countries: feature(topology, countries) as WorldAtlas['countries'],
+          interiors: mesh(topology, countries, (a, b) => a !== b) as WorldAtlas['interiors'],
         })
       }
     })

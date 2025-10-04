@@ -8,7 +8,7 @@ import { useData } from '@/modules/BarChart/useData'
 
 import './styles.css'
 
-const width = 600
+const width = 1024
 const height = 500
 const margin = { top: 20, right: 40, bottom: 45, left: 200 }
 const innerHeight = height - margin.top - margin.bottom
