@@ -3,7 +3,7 @@ import { useData } from '@/modules/WorldMap/useData'
 
 import './styles.css'
 
-const width = 600
+const width = 800
 const height = 500
 
 export function WorldMap() {
