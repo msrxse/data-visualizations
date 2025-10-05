@@ -59,7 +59,7 @@
     "topojson": "^3.0.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.x",
+    "@commitlint/cli": "^20.x",
     "@commitlint/config-conventional": "^19.x",
     "@commitlint/prompt-cli": "^19.x",
     "@commitlint/types": "^19.x",
