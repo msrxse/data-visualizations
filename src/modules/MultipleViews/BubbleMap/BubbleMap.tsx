@@ -1,0 +1,44 @@
+import { scaleSqrt } from 'd3'
+import { max } from 'd3-array'
+
+import { Marks } from '@/modules/MultipleViews/BubbleMap/Marks'
+import { type Data, type WorldAtlas } from '@/modules/MultipleViews/types'
+
+/**
+ * Maps the output of the scale to tha radius of the circles
+ * the area of the circles needs to correspond to data values
+ *
+ * area of a circle is A = pi*radius squared,
+ * solving for the radius we get square root of A/pi
+ * Thats why we need a squareRoot scale.
+ *
+ * Also both origins of domain and range must be zero
+ */
+export const BubbleMap = ({
+  worldAtlas,
+  data,
+  width,
+  height,
+}: {
+  worldAtlas: WorldAtlas
+  data: Data[]
+  width: number
+  height: number
+}) => {
+  const sizeValue = (d: Data) => d['Total Dead and Missing']
+  const maxRadius = 20
+  const sizeScale = scaleSqrt()
+    .domain([0, max(data, sizeValue) ?? 0]) // max() can return undefined!
+    .range([0, maxRadius])
+
+  return (
+    <Marks
+      worldAtlas={worldAtlas}
+      data={data}
+      width={width}
+      height={height}
+      sizeScale={sizeScale}
+      sizeValue={sizeValue}
+    />
+  )
+}

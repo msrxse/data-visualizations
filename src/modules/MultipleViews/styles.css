@@ -1,0 +1,46 @@
+.marks .land {
+  fill: #ececec;
+  stroke: none;
+}
+
+.marks .sphere {
+  fill: #fbfbfb;
+  stroke: none;
+}
+
+.marks .interiors {
+  fill: none;
+  stroke: #d9dfe0;
+  stroke-width: 1px;
+}
+
+.marks .graticule {
+  fill: none;
+  stroke: #ececec;
+  stroke-width: 1px;
+}
+
+circle {
+  fill: #137b80;
+  opacity: 0.3;
+}
+
+/* DateHistogram */
+
+.tick line {
+  stroke: #ececec;
+}
+
+.tick text {
+  fill: #635f5d;
+  font-size: 0.5em;
+}
+
+.mark {
+  fill: #137b80;
+}
+
+.axis-label {
+  font-size: 0.5em;
+  fill: #635f5d;
+}
