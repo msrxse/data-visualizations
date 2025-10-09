@@ -32,7 +32,13 @@ export function MultipleViews() {
   return (
     <div className={`w-[${width}px] h-[${height}px]`}>
       <svg width={width} height={height}>
-        <BubbleMap worldAtlas={worldAtlas} data={filteredData} width={width} height={height} />
+        <BubbleMap
+          worldAtlas={worldAtlas}
+          data={data}
+          filteredData={filteredData}
+          width={width}
+          height={height}
+        />
         <g transform={`translate(0,${height - dateHistogramSize * height})`}>
           <DateHistogram
             data={data}

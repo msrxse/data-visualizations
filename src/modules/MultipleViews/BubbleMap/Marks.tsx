@@ -1,7 +1,10 @@
+import { useMemo } from 'react'
+
 import { geoGraticule, geoNaturalEarth1, geoPath } from 'd3-geo'
 
 import { type Data, type SizeScale, type WorldAtlas } from '@/modules/MultipleViews/types'
 
+const graticule = geoGraticule()
 /**
  *
  * Two things:
@@ -33,16 +36,25 @@ export const Marks = ({
 }) => {
   const projection = geoNaturalEarth1().fitSize([width, height], { type: 'Sphere' })
   const path = geoPath(projection)
-  const graticule = geoGraticule()
 
   return (
     <g className="marks">
-      <path className="sphere" d={path({ type: 'Sphere' }) ?? undefined} />
-      <path className="graticule" d={path(graticule()) ?? undefined} />
-      {land.features.map((feature, i) => {
-        return <path className="land" key={`${i}`} d={path(feature) ?? undefined} />
-      })}
-      <path className="interiors" d={path(interiors) ?? undefined} />
+      {/* This JSX does not need to rerender with brush changes - we can memo this */}
+      {useMemo(() => {
+        return (
+          <>
+            <path className="sphere" d={path({ type: 'Sphere' }) ?? undefined} />
+            <path className="graticule" d={path(graticule()) ?? undefined} />
+            {land.features.map((feature, i) => {
+              return <path className="land" key={`${i}`} d={path(feature) ?? undefined} />
+            })}
+            <path className="interiors" d={path(interiors) ?? undefined} />
+          </>
+        )
+        // We moved graticule outside of this parent fn since it was making
+        // this useMemo not work
+      }, [interiors, land.features, path])}
+
       {data.map((d, i) => {
         /**
          * We assign a radius based on the population of each city
