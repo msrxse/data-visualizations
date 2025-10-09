@@ -1,4 +1,17 @@
-import { bin, extent, max, scaleLinear, scaleTime, sum, timeFormat, timeMonths } from 'd3'
+import { type Dispatch, type SetStateAction, useEffect, useRef } from 'react'
+
+import {
+  bin,
+  brushX,
+  extent,
+  max,
+  scaleLinear,
+  scaleTime,
+  select,
+  sum,
+  timeFormat,
+  timeMonths,
+} from 'd3'
 
 import { AxisBottom } from '@/modules/MultipleViews/DateHistogram/AxisBottom'
 import { AxisLeft } from '@/modules/MultipleViews/DateHistogram/AxisLeft'
@@ -11,9 +24,8 @@ const xAxisLabelOffset = 54
 const yAxisLabelOffset = 30
 
 // Accessor functions
-const xValue = (d: Data) => d['Reported Date']
-const xAxisLabel = 'Time'
 
+const xAxisLabel = 'Time'
 const yValue = (d: Data) => d['Total Dead and Missing']
 const yAxisLabel = 'Total Dead and Missing'
 
@@ -35,11 +47,16 @@ export function DateHistogram({
   data,
   width,
   height,
+  setBrushExtent,
+  xValue,
 }: {
   data: Data[]
   width: number
   height: number
+  setBrushExtent: Dispatch<SetStateAction<[Date, Date] | undefined>>
+  xValue: (d: Data) => Date
 }) {
+  const brushRef = useRef<SVGGElement | null>(null)
   const [xMin, xMax] = extent(data, xValue)
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
@@ -68,6 +85,27 @@ export function DateHistogram({
   const yScale = scaleLinear()
     .domain([0, max(binnedData, (d) => d.y) ?? 0])
     .range([innerHeight, 0])
+
+  useEffect(() => {
+    const brush = brushX().extent([
+      [0, 0],
+      [innerWidth, innerHeight],
+    ])
+
+    if (brushRef.current) {
+      brush(select(brushRef.current))
+    }
+
+    /**
+     * the cb fn needs to access the event.selection
+     * event.selection gives you [start, end] coords in pixels
+     * xScale.invert => Now we get these back into our domain values (transform them into dates)
+     *
+     */
+    brush.on('brush', (event) => {
+      setBrushExtent(event.selection.map(xScale.invert)) // since event.selection is a selection - you can map()
+    })
+  }, [innerWidth, innerHeight, xScale.invert, setBrushExtent])
 
   return (
     <>
@@ -103,6 +141,7 @@ export function DateHistogram({
           tooltipFormat={(d) => d}
           innerHeight={innerHeight}
         />
+        <g ref={brushRef} />
       </g>
     </>
   )
